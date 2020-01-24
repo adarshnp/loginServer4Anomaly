@@ -9,10 +9,10 @@ namespace trialpro.Services
     {
         private string connstring;
         private IDbConnection db;
-        public ConnectionProvider()
+        public ConnectionProvider(DBConnectionConfig config)
         {
             // connstring = ConfigurationManager.ConnectionStrings["MyConnectionString"].ConnectionString; 
-            connstring = "server = localhost;database =  projectlogin; userid = anomaly ; password = a4adarsh";
+            connstring = config.MyConnectionString;
         }
         public Task CloseConnection(IDbConnection db)
         {

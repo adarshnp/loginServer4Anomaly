@@ -18,9 +18,15 @@ namespace trialpro
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        public Startup(IWebHostEnvironment env)
         {
-            Configuration = configuration;
+            var builder = new ConfigurationBuilder()
+                    .SetBasePath(env.ContentRootPath)
+                    .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+                    .AddJsonFile("Config/appsettings.database.json", optional: true)
+                    .AddEnvironmentVariables();
+
+            Configuration = builder.Build();
         }
 
         public IConfiguration Configuration { get; }
@@ -29,6 +35,12 @@ namespace trialpro
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+
+            var dbConnConfig = new DBConnectionConfig();
+            Configuration.Bind("DatabaseSettings", dbConnConfig);
+
+            services.AddSingleton(dbConnConfig);
+
             services.AddSingleton<IConnectionProvider, ConnectionProvider>();
             services.AddSingleton<IUserProcessor, UserProcessor>();
             services.AddSingleton<IUserProvider, UserProvider>();
