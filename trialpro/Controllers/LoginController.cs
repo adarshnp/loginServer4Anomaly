@@ -21,15 +21,22 @@ namespace trialpro.Controllers
         private readonly IUserProvider updr;
         private readonly ITokenProvider token;
 
+        private readonly string conStr;
 
-        public LoginController(IConnectionProvider con, IUserProcessor upcr, IUserProvider updr, ITokenProvider token)
+        public LoginController(IConnectionProvider con, IUserProcessor upcr, IUserProvider updr, ITokenProvider token,DBConnectionConfig config)
         {
             this.con = con;
             this.upcr = upcr;
             this.updr = updr;
             this.token = token;
+            conStr = config.MyConnectionString;
         }
-
+        [Route("get")]
+        [HttpGet]
+        public string GetCSTR() 
+        {
+            return conStr;
+        }
         [Route("signin")]
         [HttpPost]
         public async Task<int> login(string username, string password)
