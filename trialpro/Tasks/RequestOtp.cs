@@ -11,10 +11,11 @@ namespace trialpro.Tasks
     public class RequestOtp
     {
         IUserProcessor _userProcessor;
-
-        public RequestOtp(IUserProcessor userProcessor)
+        SentMail s;
+        public RequestOtp(IUserProcessor userProcessor,SentMail sentMail)
         {
             _userProcessor = userProcessor;
+            s = sentMail;
         }
         public async Task getOtp(string username,IDbConnection db)
         { 
@@ -22,7 +23,6 @@ namespace trialpro.Tasks
             string otp = await og.GenerateOtp();
             User user = new User();
             int no =await _userProcessor.PushOtp(user, otp);
-            SentMail s = new SentMail();
             s.SentOtp(otp);
             await Task.CompletedTask;
         }

@@ -1,0 +1,9 @@
+{
+  "EmailConfiguration": {
+    "SmtpServer": "smtp.gmail.com",
+    "SmtpPort": 587,
+    "SmtpUsername": "drakestardrake@gmail.com",
+    "SmtpPassword": "Burningthunder1!"
+  }
+}
+

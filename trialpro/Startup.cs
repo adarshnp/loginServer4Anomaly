@@ -15,6 +15,7 @@ using trialpro.Controllers;
 using trialpro.Services;
 using System.Data;
 using trialpro.Tasks;
+using System.Net.Mail;
 
 namespace trialpro
 {
@@ -27,6 +28,7 @@ namespace trialpro
                     .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
                     .AddJsonFile("Config/appsettings.database.json", optional: true)
                     .AddJsonFile("Config/jwtconfig.json", optional: true)
+                    .AddJsonFile("Config/smtpConfig.json")
                     .AddEnvironmentVariables();
 
             Configuration = builder.Build();
@@ -39,21 +41,22 @@ namespace trialpro
         {
             services.AddControllers();
 
+            //Database Configuration
+
             var dbConnConfig = new DBConnectionConfig();
             Configuration.Bind("DatabaseSettings", dbConnConfig);
-
             services.AddSingleton(dbConnConfig);
-
             var connProvider = new ConnectionProvider(dbConnConfig);
-
-            var jwtConfig = new JwtConfig();
-            Configuration.Bind("Jwt", jwtConfig);
-
-            services.AddSingleton(jwtConfig);
-
             services.AddSingleton<IConnectionProvider>(connProvider);
             services.AddSingleton(connProvider.GetConnection());
 
+
+            services.AddSingleton(Configuration.GetSection("Jwt").Get<JwtConfig>());
+            services.AddSingleton(Configuration.GetSection("EmailConfiguration").Get<EmailConfiguration>());
+
+            services.AddSingleton<IEmailService, MailkitEmailService>();
+
+            services.AddSingleton<SentMail>();
             services.AddSingleton<IUserProcessor, UserProcessor>();
             services.AddSingleton<IUserProvider, UserProvider>();
             services.AddSingleton<ITokenProvider, TokenProvider>();

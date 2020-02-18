@@ -19,12 +19,12 @@ namespace trialpro.Services
         //private readonly string TextBody;
         public void SentOtp(string otp)
         {
-            try
-            {
+            //try
+            //{
                 MailMessage message = new MailMessage();
                 message.To.Add("menonakhilmenon@gmail.com");
                 //mailMessage.To.Add(u.mailId);
-                message.From = new MailAddress("adarshnp49@gmail.com", "TenshiCorp");
+                message.From = new MailAddress("drakestardrake@gmail.com", "TenshiCorp");
                 message.Subject = "NightTales account password reset OTP";
                 message.Body = "your account password reset one time password :  ";
                 var _smtpClient = new SmtpClient
@@ -34,16 +34,16 @@ namespace trialpro.Services
                     EnableSsl = true,
                     DeliveryMethod = SmtpDeliveryMethod.Network,
                     UseDefaultCredentials = false,
-                    Credentials = new NetworkCredential("adarshnp49@gmail.com", "a4d4a4r4s4h4"),
+                    Credentials = new NetworkCredential("drakestardrake@gmail.com", "Burningthunder1!"),
                     //Timeout = 20000
                 };
                 _smtpClient.Send(message);
                 Console.WriteLine("E-mail sent!");
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("Could not send the e-mail - error: " + ex.Message + ex.StackTrace);
-            }
+            //}
+            //catch (Exception ex)
+            //{
+            //    Console.WriteLine("Could not send the e-mail - error: " + ex.Message + ex.StackTrace);
+            //}
         }
         //public void SentOtp(User u)
         //{
