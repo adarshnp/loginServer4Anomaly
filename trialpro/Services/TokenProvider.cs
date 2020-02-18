@@ -1,6 +1,5 @@
 ﻿using System.Threading.Tasks;
 using trialpro.Models;
-using SessionKeyManager;
 
 namespace trialpro.Services
 {

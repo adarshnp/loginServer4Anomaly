@@ -253,3 +253,7 @@ F:\Unity\FYP\Repos\NetworkingServices\LoginServer\trialpro\obj\Debug\netcoreapp3
 F:\Unity\FYP\Repos\NetworkingServices\LoginServer\trialpro\obj\Debug\netcoreapp3.1\trialpro.csproj.CopyComplete
 F:\Unity\FYP\Repos\NetworkingServices\LoginServer\trialpro\obj\Debug\netcoreapp3.1\trialpro.dll
 F:\Unity\FYP\Repos\NetworkingServices\LoginServer\trialpro\obj\Debug\netcoreapp3.1\trialpro.pdb
+F:\Unity\FYP\Repos\NetworkingServices\LoginServer\trialpro\obj\Debug\netcoreapp3.1\trialpro.MvcApplicationPartsAssemblyInfo.cache
+F:\Unity\FYP\Repos\NetworkingServices\LoginServer\trialpro\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+F:\Unity\FYP\Repos\NetworkingServices\LoginServer\trialpro\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.Protocols.dll
+F:\Unity\FYP\Repos\NetworkingServices\LoginServer\trialpro\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
