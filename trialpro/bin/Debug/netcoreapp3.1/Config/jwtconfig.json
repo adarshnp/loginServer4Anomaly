@@ -1,0 +1,8 @@
+{
+    "Jwt": {
+        "Key": "DIO!ORAORAORADIO!ORAORAORADIO!ORAORAORADIO!ORAORAORA",
+        "Duration": "400",
+        "Issuer": "LoginAuthorizer"
+    }
+
+}

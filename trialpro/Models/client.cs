@@ -9,6 +9,7 @@ namespace trialpro.Models
     {
         public string username { get; set; }
         public string password { get; set; }
+        public string otp { get; set; }
         public Client(string Username,string Password)
         {
             this.username = Username;

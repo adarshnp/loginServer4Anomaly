@@ -5,7 +5,7 @@ namespace trialpro.Services
 {
     public interface IConnectionProvider
     {
-        Task<IDbConnection> GetConnection();
-        Task CloseConnection(IDbConnection db);
+        IDbConnection GetConnection();
+        void CloseConnection(IDbConnection db);
     }
 }

@@ -13,6 +13,8 @@ using Microsoft.Extensions.Logging;
 using trialpro.Models;
 using trialpro.Controllers;
 using trialpro.Services;
+using System.Data;
+using trialpro.Tasks;
 
 namespace trialpro
 {
@@ -24,6 +26,7 @@ namespace trialpro
                     .SetBasePath(env.ContentRootPath)
                     .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
                     .AddJsonFile("Config/appsettings.database.json", optional: true)
+                    .AddJsonFile("Config/jwtconfig.json", optional: true)
                     .AddEnvironmentVariables();
 
             Configuration = builder.Build();
@@ -41,10 +44,16 @@ namespace trialpro
 
             services.AddSingleton(dbConnConfig);
 
-            services.AddSingleton<IConnectionProvider, ConnectionProvider>();
+            var connProvider = new ConnectionProvider(dbConnConfig);
+
+            services.AddSingleton<IConnectionProvider>(connProvider);
+            services.AddSingleton(connProvider.GetConnection());
+
             services.AddSingleton<IUserProcessor, UserProcessor>();
             services.AddSingleton<IUserProvider, UserProvider>();
-            services.AddSingleton<ITokenProvider,TokenProvider>();
+            services.AddSingleton<ITokenProvider, TokenProvider>();
+            services.AddSingleton<ISessionKeyManager, JWTSessionKeyManager>();
+            services.AddSingleton<RequestOtp>();
         }
 
 

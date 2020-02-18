@@ -6,109 +6,66 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using trialpro.Models;
 using trialpro.Services;
+using trialpro.Tasks;
 using System.Data;
 
 namespace trialpro.Controllers
 {
     public class LoginController : ControllerBase
     {
-        public bool USER_FOUND = false;
-        public bool PASSWORD_MATCHED = false;
-        public bool USER_AUTHORIZED = false;
-
+        private bool OTP_MATCHED = false;
+        private readonly string conStr;
         private readonly IConnectionProvider con;
         private readonly IUserProcessor upcr;
         private readonly IUserProvider updr;
         private readonly ITokenProvider token;
-
-        private readonly string conStr;
-
-        public LoginController(IConnectionProvider con, IUserProcessor upcr, IUserProvider updr, ITokenProvider token,DBConnectionConfig config)
+        RequestOtp otp;
+        IDbConnection db;
+        public LoginController(IConnectionProvider con, IUserProcessor upcr, IUserProvider updr, ITokenProvider token, DBConnectionConfig config,RequestOtp requestOtp)
         {
+            otp = requestOtp;
             this.con = con;
             this.upcr = upcr;
             this.updr = updr;
             this.token = token;
             conStr = config.MyConnectionString;
         }
-        [Route("get")]
-        [HttpGet]
-        public string GetCSTR() 
-        {
-            return conStr;
-        }
         [Route("signin")]
         [HttpPost]
-        public async Task<int> login(string username, string password)
+        public async Task<string> loginEndpoint(string username, string password)
         {
-            User user = new User();
-            //fetch clientinfo
-            Client client = new Client(username, password);
-            //open connection
-            IDbConnection db = await con.GetConnection();
-            //retrieve userinfo
-            user = await upcr.GetUser(client, db);
-            //match user
-            USER_FOUND = await updr.CheckUserName(client, user);
-            //match password
-            if (USER_FOUND == true)
-            {
-                PASSWORD_MATCHED = await updr.CheckPassword(client, user);
-                if (PASSWORD_MATCHED == true)
-                {
-                    USER_AUTHORIZED = true;
-                }
-            }
-            else
-            {
-                Console.WriteLine("try again");
-            }
-            if (USER_AUTHORIZED == true)
-            {
-                Console.WriteLine("token sent to user");
-                return await token.createToken(user);
-            }
-            else
-            {
-                Console.WriteLine("SORRY!!!token cant be sent");
-                return -1;
-            }
-
-
+            Login log = new Login(con, upcr, updr, token);
+            return await log.login(username, password);
         }
+
+
         [Route("signup")]
         [HttpPost]
-        public async Task<int> logup(string username, string password)
+        public async Task<string> SignUpEndpoint(string username, string password)
         {
-
-            User user = null;
-            //fetch clientinfo
-            Client client = new Client(username, password);
-            //open connection
-            IDbConnection db = await con.GetConnection();
-            //retrieve userinfo
-            user = await upcr.GetUser(client, db);
-            if (user == null)
-            {
-                USER_AUTHORIZED = true;
-                return await upcr.Create(client, db);
-            }
-            else
-            {
-                USER_AUTHORIZED = false;
-            }
-            if (USER_AUTHORIZED == true)
-            {
-                Console.WriteLine("token sent to user");
-                return await token.createToken(user);
-            }
-            else
-            {
-                Console.WriteLine("SORRY!!!token cant be sent");
-                return -1;
-            }
-
-
+            Logup log = new Logup(con, upcr, updr, token);
+            return await log.logup(username, password);
         }
+
+
+        [Route("requestotp")]
+        [HttpPost]
+        public async Task OtpEndpoint(string username)
+        {
+            db = con.GetConnection();
+            await otp.getOtp(username, db);
+        }
+
+        [Route("resetpassword")]
+        [HttpPost]
+        public async Task ResetEndpoint(string username, string password, string otp)
+        {
+            ResetUser reset = new ResetUser(con, upcr, updr, token);
+            OTP_MATCHED = await reset.CheckOtp(otp, username);
+            if (OTP_MATCHED)
+            {
+                await reset.ResetPassword(password);
+            }
+        }  
     }
 }

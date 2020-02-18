@@ -5,6 +5,6 @@ namespace trialpro.Services
 {
     public interface ITokenProvider
     {
-        Task<int> createToken(User user);
+        Task<string> createToken(User user);
     }
 }

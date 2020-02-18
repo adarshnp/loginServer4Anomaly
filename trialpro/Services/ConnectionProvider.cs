@@ -11,16 +11,14 @@ namespace trialpro.Services
         private IDbConnection db;
         public ConnectionProvider(DBConnectionConfig config)
         {
-            // connstring = ConfigurationManager.ConnectionStrings["MyConnectionString"].ConnectionString; 
             connstring = config.MyConnectionString;
         }
-        public Task CloseConnection(IDbConnection db)
+        public void CloseConnection(IDbConnection db)
         {
-            db?.Close();
-            return Task.CompletedTask;
+            db.Close();
         }
 
-        public Task<IDbConnection> GetConnection()
+        public IDbConnection GetConnection()
         {
             if (db == null)
             {
@@ -28,7 +26,7 @@ namespace trialpro.Services
                 connection.Open();
                 db = connection;
             }
-            return Task.FromResult(db);
+            return db;
         }
     }
 }
