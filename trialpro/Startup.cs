@@ -46,6 +46,11 @@ namespace trialpro
 
             var connProvider = new ConnectionProvider(dbConnConfig);
 
+            var jwtConfig = new JwtConfig();
+            Configuration.Bind("Jwt", jwtConfig);
+
+            services.AddSingleton(jwtConfig);
+
             services.AddSingleton<IConnectionProvider>(connProvider);
             services.AddSingleton(connProvider.GetConnection());
 
