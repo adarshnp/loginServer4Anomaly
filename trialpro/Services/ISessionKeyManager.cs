@@ -8,6 +8,7 @@ namespace trialpro.Services
     public interface ISessionKeyManager
     {
         string GenerateNewSessionKey(string userID);
-        void ReleaseSessionKey(string key);
+        string RefreshSessionKey(string userID);
+        void ReleaseSessionKey(string userID);
     }
 }

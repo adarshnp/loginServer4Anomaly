@@ -1,20 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "F:\\gitrepo\\loginserver\\trialpro\\trialpro\\trialpro.csproj": {}
+    "F:\\Unity\\FYP\\Repos\\NetworkingServices\\LoginServer\\trialpro\\trialpro.csproj": {}
   },
   "projects": {
-    "F:\\gitrepo\\loginserver\\trialpro\\trialpro\\trialpro.csproj": {
+    "F:\\Unity\\FYP\\Repos\\NetworkingServices\\LoginServer\\trialpro\\trialpro.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "F:\\gitrepo\\loginserver\\trialpro\\trialpro\\trialpro.csproj",
+        "projectUniqueName": "F:\\Unity\\FYP\\Repos\\NetworkingServices\\LoginServer\\trialpro\\trialpro.csproj",
         "projectName": "trialpro",
-        "projectPath": "F:\\gitrepo\\loginserver\\trialpro\\trialpro\\trialpro.csproj",
-        "packagesPath": "C:\\Users\\adars\\.nuget\\packages\\",
-        "outputPath": "F:\\gitrepo\\loginserver\\trialpro\\trialpro\\obj\\",
+        "projectPath": "F:\\Unity\\FYP\\Repos\\NetworkingServices\\LoginServer\\trialpro\\trialpro.csproj",
+        "packagesPath": "C:\\Users\\Drake\\.nuget\\packages\\",
+        "outputPath": "F:\\Unity\\FYP\\Repos\\NetworkingServices\\LoginServer\\trialpro\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
         "configFilePaths": [
-          "C:\\Users\\adars\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Drake\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -22,6 +25,7 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "F:\\NugetPackages": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -45,6 +49,10 @@
             "Dapper": {
               "target": "Package",
               "version": "[2.0.30, )"
+            },
+            "Microsoft.AspNetCore.Authentication.JwtBearer": {
+              "target": "Package",
+              "version": "[3.1.1, )"
             },
             "Microsoft.EntityFrameworkCore.SqlServer": {
               "target": "Package",
