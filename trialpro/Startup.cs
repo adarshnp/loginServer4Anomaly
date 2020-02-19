@@ -41,17 +41,24 @@ namespace trialpro
         {
             services.AddControllers();
 
-            //Database Configuration
 
-            var dbConnConfig = new DBConnectionConfig();
-            Configuration.Bind("DatabaseSettings", dbConnConfig);
-            services.AddSingleton(dbConnConfig);
-            var connProvider = new ConnectionProvider(dbConnConfig);
-            services.AddSingleton<IConnectionProvider>(connProvider);
+            //Jwt Authentication and Configuration
+            var jwtConfig = Configuration.GetSection("Jwt").Get<JwtConfig>();
 
-            //Jwt
-            services.AddSingleton(Configuration.GetSection("Jwt").Get<JwtConfig>());
-            services.AddSingleton<ISessionKeyManager, JWTSessionKeyManager>();
+            services.AddSingleton<ISessionKeyManager>(new JWTSessionKeyManager(jwtConfig));
+
+            ConfigureBindings(services);
+
+
+            services.AddAuthentication().AddJwtAuthenticationWithKeyAndIssuer(jwtConfig.Key, jwtConfig.Issuer);
+        }
+
+
+        private void ConfigureBindings(IServiceCollection services) 
+        {
+            services.AddSingleton<IConnectionProvider>(
+                new ConnectionProvider(Configuration.GetSection("DatabaseSettings").Get<DBConnectionConfig>())
+                );
 
             //Email
             services.AddSingleton(Configuration.GetSection("EmailConfiguration").Get<EmailConfiguration>());
@@ -67,6 +74,7 @@ namespace trialpro
             services.AddSingleton<IUserProcessor, UserProcessor>();
             services.AddSingleton<IUserProvider, UserProvider>();
             services.AddSingleton<ITokenProvider, TokenProvider>();
+
         }
 
 
