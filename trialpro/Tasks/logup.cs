@@ -10,9 +10,7 @@ namespace trialpro.Tasks
 {
     public class Logup
     {
-        public bool USER_FOUND = false;
-        public bool PASSWORD_MATCHED = false;
-        public bool USER_AUTHORIZED = false;
+
 
         private readonly IConnectionProvider con;
         private readonly IUserProcessor upcr;
@@ -27,7 +25,7 @@ namespace trialpro.Tasks
         }
         public async Task<string> logup(string username, string password)
         {
-
+            var USER_AUTHORIZED = false;
             User user = null;
             //fetch clientinfo
             Client client = new Client(username, password);
@@ -57,8 +55,6 @@ namespace trialpro.Tasks
                 Console.WriteLine("SORRY!!!token cant be sent");
                 return "wrong token";
             }
-
-
         }
     }
 }

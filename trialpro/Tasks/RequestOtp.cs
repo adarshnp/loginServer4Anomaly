@@ -11,14 +11,16 @@ namespace trialpro.Tasks
     public class RequestOtp
     {
         IUserProcessor _userProcessor;
+        IConnectionProvider _connectionProvider;
         SentMail s;
-        public RequestOtp(IUserProcessor userProcessor,SentMail sentMail)
+        public RequestOtp(IUserProcessor userProcessor, SentMail sentMail, IConnectionProvider connectionProvider)
         {
             _userProcessor = userProcessor;
             s = sentMail;
+            _connectionProvider = connectionProvider;
         }
-        public async Task getOtp(string username,IDbConnection db)
-        { 
+        public async Task getOtp(string username)
+        {
             OTPGenerator og = new OTPGenerator();
             string otp = await og.GenerateOtp();
             User user = new User();

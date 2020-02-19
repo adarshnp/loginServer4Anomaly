@@ -14,27 +14,24 @@ namespace trialpro.Controllers
     public class LoginController : ControllerBase
     {
         private bool OTP_MATCHED = false;
-        private readonly string conStr;
-        private readonly IConnectionProvider con;
-        private readonly IUserProcessor upcr;
-        private readonly IUserProvider updr;
-        private readonly ITokenProvider token;
-        RequestOtp otp;
-        IDbConnection db;
-        public LoginController(IConnectionProvider con, IUserProcessor upcr, IUserProvider updr, ITokenProvider token, DBConnectionConfig config,RequestOtp requestOtp)
+
+        private readonly Login log;
+        private readonly Logup logup;
+        private readonly RequestOtp otp;
+        private readonly ResetUser resetUser;
+
+        public LoginController(Login log, Logup logup, RequestOtp otp, ResetUser resetUser)
         {
-            otp = requestOtp;
-            this.con = con;
-            this.upcr = upcr;
-            this.updr = updr;
-            this.token = token;
-            conStr = config.MyConnectionString;
+            this.log = log;
+            this.logup = logup;
+            this.otp = otp;
+            this.resetUser = resetUser;
         }
+
         [Route("signin")]
         [HttpPost]
         public async Task<string> loginEndpoint(string username, string password)
         {
-            Login log = new Login(con, upcr, updr, token);
             return await log.login(username, password);
         }
 
@@ -43,8 +40,7 @@ namespace trialpro.Controllers
         [HttpPost]
         public async Task<string> SignUpEndpoint(string username, string password)
         {
-            Logup log = new Logup(con, upcr, updr, token);
-            return await log.logup(username, password);
+            return await logup.logup(username, password);
         }
 
 
@@ -52,19 +48,17 @@ namespace trialpro.Controllers
         [HttpPost]
         public async Task OtpEndpoint(string username)
         {
-            db = con.GetConnection();
-            await otp.getOtp(username, db);
+            await otp.getOtp(username);
         }
 
         [Route("resetpassword")]
         [HttpPost]
         public async Task ResetEndpoint(string username, string password, string otp)
         {
-            ResetUser reset = new ResetUser(con, upcr, updr, token);
-            OTP_MATCHED = await reset.CheckOtp(otp, username);
+            OTP_MATCHED = await resetUser.CheckOtp(otp, username);
             if (OTP_MATCHED)
             {
-                await reset.ResetPassword(password);
+                await resetUser.ResetPassword(password);
             }
         }  
     }

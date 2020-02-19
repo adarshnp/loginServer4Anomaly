@@ -56,6 +56,11 @@ namespace trialpro
 
             services.AddSingleton<IEmailService, MailkitEmailService>();
 
+            services.AddSingleton<Login>();
+            services.AddSingleton<Logup>();
+            services.AddSingleton<ResetUser>();
+            services.AddSingleton<RequestOtp>();
+
             services.AddSingleton<SentMail>();
             services.AddSingleton<IUserProcessor, UserProcessor>();
             services.AddSingleton<IUserProvider, UserProvider>();

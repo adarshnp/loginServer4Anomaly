@@ -12,17 +12,12 @@ namespace trialpro.Tasks
     {
         private readonly IConnectionProvider con;
         private readonly IUserProcessor upcr;
-        private readonly IUserProvider updr;
-        private readonly ITokenProvider token;
         public string otpstring;
-        private readonly string conStr;
 
-        public ResetUser(IConnectionProvider con, IUserProcessor upcr, IUserProvider updr, ITokenProvider token)
+        public ResetUser(IConnectionProvider con, IUserProcessor upcr)
         {
             this.con = con;
             this.upcr = upcr;
-            this.updr = updr;
-            this.token = token;
         }
         public async Task<bool> CheckOtp(string otp, string username)
         {

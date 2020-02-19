@@ -10,10 +10,6 @@ namespace trialpro.Tasks
 {
     public class Login
     {
-        public bool USER_FOUND = false;
-        public bool PASSWORD_MATCHED = false;
-        public bool USER_AUTHORIZED = false;
-
         private readonly IConnectionProvider con;
         private readonly IUserProcessor upcr;
         private readonly IUserProvider updr;
@@ -27,6 +23,7 @@ namespace trialpro.Tasks
         }
         public async Task<string> login(string username, string password)
         {
+            var USER_AUTHORIZED = false;
             User user = new User();
             //fetch clientinfo
             Client client = new Client(username, password);
@@ -35,11 +32,12 @@ namespace trialpro.Tasks
             //retrieve userinfo
             user = await upcr.GetUser(client);
             //match user
-            USER_FOUND = await updr.CheckUserName(client, user);
+            var USER_FOUND = await updr.CheckUserName(client, user);
             //match password
+
             if (USER_FOUND == true)
             {
-                PASSWORD_MATCHED = await updr.CheckPassword(client, user);
+                var PASSWORD_MATCHED = await updr.CheckPassword(client, user);
                 if (PASSWORD_MATCHED == true)
                 {
                     USER_AUTHORIZED = true;
