@@ -48,13 +48,15 @@ namespace trialpro
             services.AddSingleton(dbConnConfig);
             var connProvider = new ConnectionProvider(dbConnConfig);
             services.AddSingleton<IConnectionProvider>(connProvider);
-            services.AddSingleton(connProvider.GetConnection());
 
-
+            //Jwt
             services.AddSingleton(Configuration.GetSection("Jwt").Get<JwtConfig>());
-            services.AddSingleton(Configuration.GetSection("EmailConfiguration").Get<EmailConfiguration>());
+            services.AddSingleton<ISessionKeyManager, JWTSessionKeyManager>();
 
+            //Email
+            services.AddSingleton(Configuration.GetSection("EmailConfiguration").Get<EmailConfiguration>());
             services.AddSingleton<IEmailService, MailkitEmailService>();
+
 
             services.AddSingleton<Login>();
             services.AddSingleton<Logup>();
@@ -65,8 +67,6 @@ namespace trialpro
             services.AddSingleton<IUserProcessor, UserProcessor>();
             services.AddSingleton<IUserProvider, UserProvider>();
             services.AddSingleton<ITokenProvider, TokenProvider>();
-            services.AddSingleton<ISessionKeyManager, JWTSessionKeyManager>();
-            services.AddSingleton<RequestOtp>();
         }
 
 

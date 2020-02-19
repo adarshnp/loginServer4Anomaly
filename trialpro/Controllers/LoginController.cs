@@ -1,13 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using trialpro.Models;
-using trialpro.Services;
 using trialpro.Tasks;
-using System.Data;
 
 namespace trialpro.Controllers
 {

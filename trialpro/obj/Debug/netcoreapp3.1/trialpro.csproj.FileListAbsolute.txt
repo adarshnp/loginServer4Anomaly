@@ -258,3 +258,5 @@ F:\Unity\FYP\Repos\NetworkingServices\LoginServer\trialpro\bin\Debug\netcoreapp3
 F:\Unity\FYP\Repos\NetworkingServices\LoginServer\trialpro\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
 F:\Unity\FYP\Repos\NetworkingServices\LoginServer\trialpro\bin\Debug\netcoreapp3.1\Config\smtpConfig.json
 F:\Unity\FYP\Repos\NetworkingServices\LoginServer\trialpro\bin\Debug\netcoreapp3.1\MimeKit.dll
+F:\Unity\FYP\Repos\NetworkingServices\LoginServer\trialpro\bin\Debug\netcoreapp3.1\MailKit.dll
+F:\Unity\FYP\Repos\NetworkingServices\LoginServer\trialpro\obj\Debug\netcoreapp3.1\trialpro.MvcApplicationPartsAssemblyInfo.cache

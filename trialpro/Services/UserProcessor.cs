@@ -9,11 +9,14 @@ namespace trialpro.Services
 {
     public class UserProcessor : IUserProcessor
     {
-        private IDbConnection db;
-        public UserProcessor(IDbConnection db)
+        private IDbConnection db =>connectionProvider.GetConnection();
+        private readonly IConnectionProvider connectionProvider;
+
+        public UserProcessor(IConnectionProvider connectionProvider)
         {
-            this.db = db;
+            this.connectionProvider = connectionProvider;
         }
+
         public async Task<int> Create(Client c)
         {
             int no_rows_affected =await db.ExecuteAsync("insert into user (Username,Password,MailId) values(@username,@password,@mailId)", c);
