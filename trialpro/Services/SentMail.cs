@@ -34,7 +34,7 @@ namespace trialpro.Services
                     EnableSsl = true,
                     DeliveryMethod = SmtpDeliveryMethod.Network,
                     UseDefaultCredentials = false,
-                    Credentials = new NetworkCredential("drakestardrake@gmail.com", "Burningthunder1!"),
+                    Credentials = new NetworkCredential("drakestardrake@gmail.com", "****"),
                     //Timeout = 20000
                 };
                 _smtpClient.Send(message);
